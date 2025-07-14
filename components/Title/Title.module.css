@@ -1,0 +1,31 @@
+.title {
+  font-family: var(--font-title);
+  font-size: var(--font-size-title);
+  color: var(--color-title);
+  margin: 0 0 1rem;
+  font-weight: 500;
+}
+
+.titleS {
+  font-size: var(--font-size-title-s);
+}
+
+.titleM {
+  font-size: var(--font-size-title-m);
+}
+
+.titleL {
+  font-size: var(--font-size-title-l);
+}
+
+.titleXL {
+  font-size: var(--font-size-title-xl);
+}
+
+.fontSerif {
+  font-family: var(--font-title, "TiemposHeadline-Regular"), serif;
+}
+
+.fontSans {
+  font-family: Moderat, var(--font-text, Moderat), sans-serif;
+}

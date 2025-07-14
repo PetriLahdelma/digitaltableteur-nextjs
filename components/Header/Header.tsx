@@ -1,0 +1,170 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./Header.module.css";
+import Image from "next/image";
+import Logo from "../../assets/images/01jy60fd46fxwvk450w70bmyzm_1750401080.webp";
+import { WiMoonAltNew } from "react-icons/wi";
+import { IoSunnySharp } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
+import React from "react";
+
+// Cookie helpers
+function setCookie(name: string, value: string, days = 365) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(
+    value
+  )}; expires=${expires}; path=/`;
+}
+function getCookie(name: string) {
+  return document.cookie.split("; ").reduce((r, v) => {
+    const parts = v.split("=");
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, "");
+}
+
+const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+  const { t, i18n } = useTranslation();
+  const pathname = usePathname();
+  const languages = [
+    { code: "en", label: t("langEN") },
+    { code: "fi", label: t("langFI") },
+    { code: "sv", label: t("langSV") },
+  ];
+
+  React.useEffect(() => {
+    const cookieLang = getCookie("i18next");
+    if (cookieLang && i18n.language.split("-")[0] !== cookieLang) {
+      i18n.changeLanguage(cookieLang);
+    }
+  }, [i18n]);
+  React.useEffect(() => {
+    const cookieTheme = getCookie("dt_theme");
+    if (cookieTheme && theme !== cookieTheme) {
+      toggleTheme();
+    }
+  }, [theme]);
+  const currentlang = i18n.language.split("-")[0];
+  const changeLanguage = (code: string) => {
+    i18n.changeLanguage(code);
+    setCookie("i18next", code);
+    localStorage.setItem("i18nextLng", code);
+  };
+  const changeTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setCookie("dt_theme", newTheme);
+    toggleTheme();
+  };
+  return (
+    <header className={styles.header}>
+      <div className={styles.headerInner}>
+        <Link href="/" className={styles.logoLink}>
+          <Image
+            src={Logo}
+            alt={t("headerLogoAlt")}
+            className={styles.logo}
+            width={56}
+            height={56}
+          />
+        </Link>
+        <nav className={styles.navbar}>
+          <ul className={styles.nav}>
+            <li>
+              <Link
+                href="/"
+                className={pathname === "/" ? styles.selected : undefined}
+              >
+                {t("navHome")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/work"
+                className={
+                  styles.navLink +
+                  " " +
+                  (pathname.startsWith("/work") ? styles.selected : "")
+                }
+                tabIndex={0}
+                aria-current={pathname.startsWith("/work") ? "page" : undefined}
+              >
+                {t("navWork")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className={
+                  pathname.startsWith("/about") ? styles.selected : undefined
+                }
+              >
+                {t("navAbout")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/blog"
+                className={
+                  pathname.startsWith("/blog") ? styles.selected : undefined
+                }
+              >
+                {t("navBlog")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className={
+                  pathname.startsWith("/contact") ? styles.selected : undefined
+                }
+              >
+                {t("navContact")}
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+          <div className={styles.languageSwitcher}>
+            {languages.map((lang, idx) => (
+              <span
+                key={lang.code}
+                onClick={() => changeLanguage(lang.code)}
+                style={{
+                  cursor: currentlang === lang.code ? "default" : "pointer",
+                  opacity: currentlang === lang.code ? 0.5 : 1,
+                  textDecoration: "none",
+                  borderBottom:
+                    currentlang === lang.code
+                      ? "2px solid"
+                      : "2px solid transparent",
+                  marginRight: idx < languages.length - 1 ? 8 : 0,
+                  transition: "border-color 0.2s",
+                }}
+                className={styles.languageLink}
+                tabIndex={0}
+                aria-label={lang.label}
+                aria-current={currentlang === lang.code ? "true" : undefined}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && currentlang !== lang.code)
+                    changeLanguage(lang.code);
+                }}
+              >
+                {lang.label}
+              </span>
+            ))}
+          </div>
+          <button
+            onClick={changeTheme}
+            className={styles.themeToggle}
+            aria-label={t("toggleDarkMode")}
+          >
+            {theme === "dark" ? <WiMoonAltNew /> : <IoSunnySharp />}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
