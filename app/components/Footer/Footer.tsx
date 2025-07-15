@@ -1,0 +1,84 @@
+"use client";
+import React from "react";
+import styles from "./Footer.module.css";
+import { FaInstagram, FaFacebook, FaLinkedin, FaMedium } from "react-icons/fa";
+import Grid from "../Grid/Grid";
+import { useTranslation } from "react-i18next";
+
+const Footer = () => {
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className={styles.footer}>
+      <Grid columns={3}>
+        <div className={styles["gridItemBlank"]}>
+          <h2>
+            <a href="/">Digitaltableteur</a>
+          </h2>
+          <p>
+            {t("footerAddress1")}
+            <br />
+            {t("footerAddress2")}
+            <br />
+            <a href="mailto:mail@digitaltableteur.com">
+              mail@digitaltableteur.com
+            </a>
+          </p>
+          <br />
+          <p className={styles.billingDetails}>{t("footerBillingTitle")}</p>
+          <p>
+            {t("footerBillingName")}
+            <br />
+            {t("footerBillingAddress")}
+            <br />
+            {t("footerBillingZip")}
+            <br />
+            {t("footerBillingVat")}
+          </p>
+        </div>
+        <div className={styles["gridItemBlank"]}></div>
+        <div className={styles["gridItemBlank"]}></div>
+      </Grid>
+      <div className={styles["socialLinks"]}>
+        <a
+          href="https://www.instagram.com/digitaltableteur/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("footerAriaInstagram")}
+        >
+          {FaInstagram({ size: 24 })}
+        </a>
+        <a
+          href="https://www.facebook.com/digitaltableteur"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("footerAriaFacebook")}
+        >
+          {FaFacebook({ size: 24 })}
+        </a>
+        <a
+          href="https://www.linkedin.com/company/digitaltableteur/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("footerAriaLinkedin")}
+        >
+          {FaLinkedin({ size: 24 })}
+        </a>
+        <a
+          href="https://medium.com/@petrilahdelma/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t("footerAriaMedium")}
+        >
+          {FaMedium({ size: 24 })}
+        </a>
+      </div>
+      <p className={styles["footerText"]}>
+        &copy; {currentYear} Digitaltableteur. {t("footerCopyright")}
+      </p>
+    </footer>
+  );
+};
+
+export default Footer;

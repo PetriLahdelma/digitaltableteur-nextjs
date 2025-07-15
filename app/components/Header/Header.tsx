@@ -2,8 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
-import Image from "next/image";
-import Logo from "../../assets/images/01jy60fd46fxwvk450w70bmyzm_1750401080.webp";
 import { WiMoonAltNew } from "react-icons/wi";
 import { IoSunnySharp } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
@@ -45,7 +43,7 @@ const Header = () => {
       toggleTheme();
     }
   }, [theme]);
-  const currentlang = i18n.language.split("-")[0];
+  const currentlang = i18n.language ? i18n.language.split("-")[0] : "en";
   const changeLanguage = (code: string) => {
     i18n.changeLanguage(code);
     setCookie("i18next", code);
@@ -60,12 +58,10 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.headerInner}>
         <Link href="/" className={styles.logoLink}>
-          <Image
-            src={Logo}
+          <img
+            src="/logo.webp?v=3"
             alt={t("headerLogoAlt")}
             className={styles.logo}
-            width={56}
-            height={56}
           />
         </Link>
         <nav className={styles.navbar}>
@@ -168,3 +164,28 @@ const Header = () => {
 };
 
 export default Header;
+function useTheme(): { theme: string; toggleTheme: () => void } {
+  const [theme, setTheme] = React.useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const cookieTheme = getCookie("dt_theme");
+      if (cookieTheme === "light" || cookieTheme === "dark") {
+        return cookieTheme;
+      }
+    }
+    return "light";
+  });
+
+  React.useEffect(() => {
+    // Toggle .themeDark class on <body> for dark mode, remove for light
+    if (typeof document !== "undefined") {
+      document.body.classList.toggle("themeDark", theme === "dark");
+    }
+    setCookie("dt_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = React.useCallback(() => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
+
+  return { theme, toggleTheme };
+}

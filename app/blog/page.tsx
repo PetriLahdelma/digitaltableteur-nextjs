@@ -1,3 +1,3 @@
-export default function BlogPage() {
-  return <div>Blog</div>;
+export default function BlogIndex() {
+  return <div>Blog index placeholder</div>;
 }
