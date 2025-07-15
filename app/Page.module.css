@@ -1,38 +1,37 @@
-.home {
-  text-align: left;
-  padding-inline: 2rem;
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+
+  display: grid;
+  grid-template-rows: 20px 1fr 20px;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  padding: 80px;
+  gap: 64px;
+  font-family: var(--font-geist-sans);
 }
 
-.hero {
-  margin-block-end: var(--space-layout-96);
-  font-family: var(--primary-heading-font);
-  font-size: 8rem;
-  font-weight: 500;
-  margin-block-start: -7.68rem;
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
 }
 
-.lead {
-  font-family: var(--primary-body-font);
-  font-size: 2.5rem;
-  line-height: 1.5;
-  color: var(--main-body-copy-color);
-  margin-block-end: var(--space-layout-96);
-}
-
-.cta {
-  margin-block-start: 2rem;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  margin: 0 auto var(--space-layout-32);
-  text-align: center;
-  padding: var(--space-layout-64);
-  font-family: var(--primary-body-font);
-  font-size: var(--font-size-title);
-  color: var(--color-white);
-  font-size: 1.5rem;
-  text-decoration: underline;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
 }
 
 .gradientText {
@@ -43,7 +42,6 @@
   color: transparent;
   animation: gradient-move 4s ease-in-out infinite;
 }
-
 @keyframes gradient-move {
   0% {
     background-position: 0% 50%;
@@ -58,19 +56,142 @@
   }
 }
 
-@media (width <= 768px) {
-  .hero {
-    font-size: 4rem;
-    margin-block-start: -3.84rem;
+.hero,
+.about,
+.cta {
+  margin: var(--space-layout-32);
+}
+
+.main ol {
+  font-family: var(--font-geist-mono);
+  padding-left: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  list-style-position: inside;
+}
+
+.main li:not(:last-of-type) {
+  margin-bottom: 8px;
+}
+
+.main code {
+  font-family: inherit;
+  background: var(--gray-alpha-100);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  background-color: var(--color-primary);
+  padding: var(--space-layout-32);
+}
+
+.cta a {
+  appearance: none;
+  border-radius: 128px;
+  height: 48px;
+  padding: 0 20px;
+  border: none;
+  border: 1px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+a.primary {
+  background: var(--foreground);
+  color: var(--background);
+  gap: 8px;
+}
+
+a.secondary {
+  border-color: var(--gray-alpha-200);
+  min-width: 158px;
+}
+
+.footer {
+  grid-row-start: 3;
+  display: flex;
+  gap: 24px;
+}
+
+.footer a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer img {
+  flex-shrink: 0;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  a.primary:hover {
+    background: var(--button-primary-hover);
+    border-color: transparent;
   }
 
-  .lead {
-    font-size: 1.5rem;
+  a.secondary:hover {
+    background: var(--button-secondary-hover);
+    border-color: transparent;
   }
 
-  .about .gridItemBlank {
-    grid-column: 1 / -1 !important;
-    width: 100vw;
-    margin-left: calc(-1 * var(--space-layout-0, 0));
+  .footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px;
+    padding-bottom: 80px;
+  }
+
+  .main {
+    align-items: center;
+  }
+
+  .main ol {
+    text-align: center;
+  }
+
+  .ctas {
+    flex-direction: column;
+  }
+
+  .ctas a {
+    font-size: 14px;
+    height: 40px;
+    padding: 0 16px;
+  }
+
+  a.secondary {
+    min-width: auto;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: invert();
   }
 }

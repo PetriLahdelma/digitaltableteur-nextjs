@@ -1,0 +1,36 @@
+.link {
+  color: var(--link-color);
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--primary-body-font, Moderat, sans-serif);
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.linkS {
+  font-size: 1rem; /* 16px */
+  gap: 0.3rem;
+}
+
+.linkM {
+  font-size: 1.5rem; /* 24px */
+  gap: 0.5rem;
+}
+
+.linkL {
+  font-size: 3rem; /* 48px */
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 0.75em; /* 12px */
+}
+
+.link.disabled {
+  pointer-events: none;
+  color: var(--color-gray-medium);
+  opacity: 0.5;
+}

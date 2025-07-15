@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import Grid from "../components/Grid/Grid";
-import Title from "../components/Title/Title";
-import Text from "../components/Text/Text";
-import Link from "next/link";
+import Grid from "./components/Grid/Grid";
 import styles from "./Page.module.css";
+import Title from "./components/Title/Title";
+import Text from "./components/Text/Text";
+import Link from "./components/Link/Link";
+import { useTranslation } from "react-i18next";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -40,22 +40,14 @@ export default function HomePage() {
               animation: "gradientMove 4s ease-in-out infinite",
               height: "75vh",
             }}
-          ></div>
-          <style>
-            {`
-              @keyframes gradientMove {
-                0% {
-                  background-position: 0% 50%;
-                }
-                50% {
-                  background-position: 100% 50%;
-                }
-                100% {
-                  background-position: 0% 50%;
-                }
-              }
-            `}
-          </style>
+          />
+          <style>{`
+            @keyframes gradientMove {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
+            }
+          `}</style>
         </Grid>
       </section>
       <section className={styles.about}>
