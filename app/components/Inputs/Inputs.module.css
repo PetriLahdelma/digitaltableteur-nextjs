@@ -1,0 +1,75 @@
+@import url("../../styles/variables.css");
+@import url("../../styles/fonts.css");
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.label {
+  font-size: 1rem;
+  font-family: Moderat, sans-serif;
+  color: var(--color-primary);
+  align-items: flex-start;
+}
+
+.input {
+  margin-block: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-family: Moderat, sans-serif;
+  transition: border-color 0.3s;
+  min-height: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.errorMessage {
+  font-family: Moderat, sans-serif;
+  font-size: 1rem;
+  color: var(--color-error);
+  margin-top: 0.5rem;
+}
+
+.input::placeholder {
+  color: var(--color-primary);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  border-width: 1px;
+  outline: 2px solid var(--color-primary);
+  box-sizing: border-box;
+}
+
+.error {
+  border-color: var(--color-error);
+  background-color: var(--color-error-bg);
+}
+
+.input.error::placeholder {
+  color: var(--color-error); /* Error color for placeholder */
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-disabled-bg-light);
+  border-color: var(--color-primary-disabled);
+}
+
+.input:disabled::placeholder {
+  color: var(--color-disabled-placeholder);
+}
+
+.masterCheckbox {
+  display: flex;
+  align-items: flex-start;
+  margin-block: 1.5rem;
+}

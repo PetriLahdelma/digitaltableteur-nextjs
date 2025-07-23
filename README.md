@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This repo contains the Next.js migration of the [Digitaltableteur](https://digitaltableteur.com) site.
+It aims to match the Vite production build found at [PetriLahdelma/digitaltableteur](https://github.com/PetriLahdelma/digitaltableteur).
 
 ## Getting Started
 
@@ -34,3 +35,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## TODO
+
+- [ ] Port all blog pages and posts from the Vite repository.
+- [ ] Implement CookieConsent banner and Cookie Policy pages.
+- [ ] Add remaining components (ArticleCard, BlogNav, SocialShare, etc.).
+- [ ] Configure ESLint so `npm run lint` passes.
+- [ ] Add automated tests or adapt existing ones from the old repo.
