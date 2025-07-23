@@ -1,0 +1,28 @@
+@import url("../../styles/variables.css");
+@import url("../../styles/fonts.css");
+
+.checkboxGroup {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+
+@supports (width: fit-content) {
+  .checkboxGroup {
+    width: fit-content;
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+}

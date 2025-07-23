@@ -1,0 +1,69 @@
+@import url("../styles/variables.css");
+@import url("../styles/fonts.css");
+
+.contact {
+  text-align: center;
+  padding: 32px;
+}
+
+.contact h1 {
+  font-family: var(--primary-heading-font, serif);
+  font-size: 5rem;
+  font-weight: var(--primary-heading-weight, 300);
+  margin-block: 2rem 6rem;
+  color: var(--color-primary);
+}
+
+.contact h2 {
+  font-family: var(--secondary-heading-font, sans-serif);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.privacyPolicy {
+  font-size: 1.1rem;
+  color: var(--color-gray-medium);
+  text-align: center;
+}
+
+.privacyPolicy a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.privacyPolicy a:hover {
+  text-decoration: underline;
+}
+
+.contactForm p {
+  font-family: Moderat, sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-gray-medium);
+  text-align: center;
+  margin: 0;
+}
+
+.checkboxGroup {
+  margin-block-start: 1rem;
+}
+
+.contactFormTitle {
+  font-family: var(--secondary-heading-font, sans-serif);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+}
+
+.contactInfo {
+  color: var(--color-primary);
+  margin-block-end: 2rem;
+  font-size: 1rem;
+}
