@@ -1,86 +1,100 @@
 "use client";
 import React from "react";
+import { cn } from "@/lib/classNames";
 import styles from "./Button.module.css";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "error"
-    | "warning"
-    | "success"
-    | "info";
-  disabled?: boolean;
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "error"
+  | "warning"
+  | "success"
+  | "info";
+export type ButtonSize = "s" | "m" | "l";
+
+type CommonProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   icon?: React.ReactNode;
   endIcon?: React.ReactNode;
-  children?: React.ReactNode | React.ReactNode[];
+  submits?: boolean;
   accessibleDescription?: string;
   accessibleName?: string;
   accessibleNameRef?: string;
   accessibleRole?: "button" | "link";
-  submits?: boolean;
-  tooltip?: string;
-  size?: "s" | "m" | "l";
-}
+  className?: string;
+  children?: React.ReactNode;
+};
+
+type ButtonProps = CommonProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    as?: "button";
+  };
+
+const variantClassMap: Record<ButtonVariant, string> = {
+  primary: styles.primary,
+  secondary: styles.secondary,
+  tertiary: styles.tertiary,
+  error: styles.error,
+  warning: styles.warning,
+  success: styles.success,
+  info: styles.info,
+};
+
+const sizeClassMap: Record<ButtonSize, string | undefined> = {
+  s: styles.small,
+  m: undefined,
+  l: styles.large,
+};
 
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
-  disabled = false,
+  size = "m",
   icon,
   endIcon,
-  children,
+  submits,
   accessibleDescription,
   accessibleName,
   accessibleNameRef,
-  accessibleRole = "button",
-  submits = false,
-  tooltip,
-  type = "button",
-  onClick,
-  className = "",
-  size = "m",
+  accessibleRole,
+  className,
+  children,
+  type,
   ...rest
 }) => {
-  const normalizedIcon =
-    typeof icon === "function" ? React.createElement(icon) : icon;
-  const normalizedEndIcon =
-    typeof endIcon === "function" ? React.createElement(endIcon) : endIcon;
+  const isIconOnly = !children && !!(icon ?? endIcon);
 
   return (
     <button
-      className={[
+      type={submits ? "submit" : type}
+      className={cn(
         styles.button,
-        styles[variant],
-        styles[size],
-        !children && normalizedIcon ? styles["iconOnly"] : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      disabled={disabled}
+        variantClassMap[variant],
+        sizeClassMap[size],
+        isIconOnly && styles.iconOnly,
+        className
+      )}
       aria-describedby={accessibleDescription}
       aria-label={accessibleName}
       aria-labelledby={accessibleNameRef}
       role={accessibleRole}
-      type={submits ? "submit" : type}
-      title={tooltip}
-      onClick={onClick}
       {...rest}
     >
-      {normalizedIcon && (
-        <span className={styles.icon} data-size={size}>
-          {normalizedIcon}
+      {icon && (
+        <span className={styles.icon} aria-hidden="true">
+          {icon}
         </span>
       )}
-      {children && <span className={styles.text}>{children}</span>}
-      {normalizedEndIcon && (
-        <span className={styles.icon} data-size={size}>
-          {normalizedEndIcon}
+      {children}
+      {endIcon && (
+        <span className={styles.icon} aria-hidden="true">
+          {endIcon}
         </span>
       )}
     </button>
   );
 };
 
+export type { ButtonProps };
 export default Button;

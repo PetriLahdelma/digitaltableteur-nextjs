@@ -1,48 +1,67 @@
+"use client";
 import React from "react";
+import { cn } from "@/lib/classNames";
 import styles from "./Title.module.css";
 
 type TitleSize = "S" | "M" | "L" | "XL";
-type TitleTerminals = "sans" | "serif";
+type TitleTerminals = "serif" | "sans";
+type TitleWeight = "regular" | "medium" | "semibold" | "bold";
 
-type TitleProps = {
-  children: React.ReactNode;
-  as?: keyof React.JSX.IntrinsicElements;
-  className?: string;
-  size?: TitleSize;
+export type TitleProps<TTag extends React.ElementType = "h1"> = {
+  as?: TTag;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
+  size?: TitleSize;
   terminals?: TitleTerminals;
-};
+  weight?: TitleWeight;
+  className?: string;
+  children: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<TTag>, "as" | "children">;
 
 const sizeClassMap: Record<TitleSize, string> = {
-  S: styles["titleS"] || "",
-  M: styles["titleM"] || "",
-  L: styles["titleL"] || "",
-  XL: styles["titleXL"] || "",
+  S: styles.titleS,
+  M: styles.titleM,
+  L: styles.titleL,
+  XL: styles.titleXL,
 };
 
 const terminalsClassMap: Record<TitleTerminals, string> = {
-  sans: styles["fontSans"] || "",
-  serif: styles["fontSerif"] || "",
+  serif: styles.fontSerif,
+  sans: styles.fontSans,
 };
 
-const Title: React.FC<TitleProps> = ({
-  children,
+const weightClassMap: Record<TitleWeight, string | undefined> = {
+  regular: styles.weightRegular,
+  medium: undefined,
+  semibold: styles.weightSemibold,
+  bold: styles.weightBold,
+};
+
+const Title = <TTag extends React.ElementType = "h1">({
   as,
-  className = "",
-  size = "L",
   level,
+  size = "L",
   terminals = "serif",
-}) => {
-  const Tag =
-    as || (level ? (`h${level}` as keyof React.JSX.IntrinsicElements) : "h1");
-  const sizeClass = sizeClassMap[size] || "";
-  const terminalsClass = terminalsClassMap[terminals] || "";
+  weight = "medium",
+  className,
+  children,
+  ...rest
+}: TitleProps<TTag>) => {
+  const resolvedLevel = level ?? 1;
+  const Component = (as ?? (`h${resolvedLevel}` as TTag)) as React.ElementType;
+
   return (
-    <Tag
-      className={`${styles.title} ${sizeClass} ${terminalsClass} ${className}`.trim()}
+    <Component
+      className={cn(
+        styles.title,
+        sizeClassMap[size],
+        terminalsClassMap[terminals],
+        weightClassMap[weight],
+        className
+      )}
+      {...rest}
     >
       {children}
-    </Tag>
+    </Component>
   );
 };
 

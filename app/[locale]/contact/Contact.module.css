@@ -1,0 +1,46 @@
+.contact {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: 400;
+  margin: 2rem 0 1rem;
+  color: var(--color-primary, #00f);
+}
+
+.intro {
+  max-width: 40rem;
+  margin: 0 auto;
+  color: var(--color-text, currentColor);
+}
+
+.emailLink {
+  color: var(--color-primary, #00f);
+  text-decoration: underline;
+}
+
+.formWrapper {
+  width: min(100%, 620px);
+}
+
+.details {
+  font-size: 1rem;
+  color: var(--color-gray-medium, #666);
+  line-height: 1.5;
+}
+
+@media (width <= 768px) {
+  .title {
+    font-size: 3.25rem;
+  }
+
+  .contact {
+    padding: 1.5rem;
+  }
+}

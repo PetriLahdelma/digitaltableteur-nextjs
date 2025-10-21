@@ -1,0 +1,111 @@
+.card {
+  background: var(--color-surface);
+  color: inherit;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-5);
+  box-shadow: 0 12px 35px rgba(7, 18, 51, 0.08);
+  transform-origin: center;
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.toneDefault {}
+.inverse {}
+
+.bleed {
+  padding: 0;
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.interactive:active {
+  transform: translateY(-3px);
+}
+
+.toneSurface {
+  background: var(--color-surface-strong);
+}
+
+.tonePrimary {
+  background: color-mix(in srgb, var(--color-primary) 14%, #ffffff 86%);
+  border-color: color-mix(in srgb, var(--color-primary) 45%, #ffffff 55%);
+}
+
+.tonePrimary.inverse {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.toneDark {
+  background: rgba(7, 18, 51, 0.92);
+  color: var(--color-text-inverse);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-md);
+}
+
+.toneGhost {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.withBorderStrong {
+  border-color: var(--color-border-strong);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.media {
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) - 0.75rem);
+  max-width: 100%;
+}
+
+.media img,
+.media video {
+  width: 100%;
+  display: block;
+}
+
+.compact {
+  padding: var(--space-4);
+  gap: var(--space-3);
+}
+
+@media (max-width: 720px) {
+  .card {
+    padding: var(--space-4);
+  }
+}

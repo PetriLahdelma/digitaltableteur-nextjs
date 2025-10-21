@@ -4,6 +4,7 @@ import styles from "./Footer.module.css";
 import { FaInstagram, FaFacebook, FaLinkedin, FaMedium } from "react-icons/fa";
 import Grid from "../Grid/Grid";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -14,7 +15,7 @@ const Footer = () => {
       <Grid columns={3}>
         <div className={styles["gridItemBlank"]}>
           <h2>
-            <a href="/">Digitaltableteur</a>
+            <Link href="/">Digitaltableteur</Link>
           </h2>
           <p>
             {t("footerAddress1")}

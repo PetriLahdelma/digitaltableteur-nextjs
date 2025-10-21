@@ -1,0 +1,36 @@
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: background var(--transition-base);
+}
+
+.button:hover {
+  background: rgba(4, 61, 255, 0.18);
+}
+
+.copyButton {
+  background: rgba(7, 18, 51, 0.08);
+  color: var(--color-text-secondary);
+}
+
+.copyButton:hover {
+  background: rgba(7, 18, 51, 0.14);
+}
+
+.status {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}

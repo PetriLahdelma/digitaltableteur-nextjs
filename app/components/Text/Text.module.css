@@ -1,8 +1,9 @@
 .text {
-  font-family: var(--font-text);
-  font-size: var(--font-size-text);
-  font-weight: var(--font-weight-text);
-  color: var(--color-text);
+  font-family: var(--font-text, "Moderat", sans-serif);
+  font-size: var(--font-size-text, 1.125rem);
+  font-weight: var(--font-weight-text, 400);
+  color: var(--color-text, currentColor);
+  line-height: 1.6;
   margin: 0 0 1rem;
 }
 
@@ -11,7 +12,7 @@
 }
 
 .textM {
-  font-size: 1.125rem;
+  font-size: var(--font-size-text, 1.125rem);
 }
 
 .textL {
@@ -19,9 +20,21 @@
 }
 
 .serif {
-  font-family: var(--font-serif, "Tiempos-Text", serif);
+  font-family: var(--font-serif, "TiemposText-Regular", serif);
 }
 
 .sans {
-  font-family: var(--font-sans, "Moderat", sans-serif);
+  font-family: var(--font-text, "Moderat", sans-serif);
+}
+
+.weightMedium {
+  font-weight: 500;
+}
+
+.weightSemibold {
+  font-weight: 600;
+}
+
+.weightBold {
+  font-weight: 700;
 }

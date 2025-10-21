@@ -1,11 +1,14 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import type { Route } from "next";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { WiMoonAltNew } from "react-icons/wi";
 import { IoSunnySharp } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import React from "react";
+import { useTheme } from "../ThemeProvider/ThemeProvider";
 
 // Cookie helpers
 function setCookie(name: string, value: string, days = 365) {
@@ -22,9 +25,28 @@ function getCookie(name: string) {
 }
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, mounted } = useTheme();
   const { t, i18n } = useTranslation();
   const pathname = usePathname();
+  const params = useParams();
+  const router = useRouter();
+
+  const activeLocale =
+    typeof params?.locale === "string" ? params.locale : null;
+  const normalizedPathname = React.useMemo(() => {
+    if (!pathname) return "/";
+    let path = pathname;
+    if (activeLocale) {
+      const prefix = `/${activeLocale}`;
+      if (path.startsWith(prefix)) {
+        path = path.slice(prefix.length) || "/";
+      }
+    } else if (path.startsWith("/en")) {
+      path = path.slice(3) || "/";
+    }
+    if (path === "") return "/";
+    return path.startsWith("/") ? path : `/${path}`;
+  }, [pathname, activeLocale]);
   const languages = [
     { code: "en", label: t("langEN") },
     { code: "fi", label: t("langFI") },
@@ -38,61 +60,84 @@ const Header = () => {
     }
   }, [i18n]);
   React.useEffect(() => {
-    const cookieTheme = getCookie("dt_theme");
-    if (cookieTheme && theme !== cookieTheme) {
-      toggleTheme();
-    }
+    setCookie("dt_theme", theme);
   }, [theme]);
   const currentlang = i18n.language ? i18n.language.split("-")[0] : "en";
   const changeLanguage = (code: string) => {
+    if (code === activeLocale) return;
+
     i18n.changeLanguage(code);
     setCookie("i18next", code);
     localStorage.setItem("i18nextLng", code);
+
+    const cleanedPath =
+      normalizedPathname === "/" ? "" : normalizedPathname.replace(/^\/+/, "");
+    const basePath = cleanedPath ? `/${cleanedPath}` : "";
+    const destination = `/${code === "en" ? "en" : code}${basePath}`;
+    router.push(destination as Route);
   };
   const changeTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setCookie("dt_theme", newTheme);
     toggleTheme();
   };
+  const localePrefix =
+    activeLocale && activeLocale !== "en" ? `/${activeLocale}` : "/en";
+  const buildHref = (path: string) => {
+    if (path === "/") {
+      return localePrefix;
+    }
+    return `${localePrefix}${path}`;
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        <Link href="/" className={styles.logoLink}>
-          <img
-            src="/logo.webp?v=3"
+        <Link href={buildHref("/")} className={styles.logoLink}>
+          <Image
+            src="/logo.webp"
             alt={t("headerLogoAlt")}
             className={styles.logo}
+            width={160}
+            height={32}
+            priority
           />
         </Link>
         <nav className={styles.navbar}>
           <ul className={styles.nav}>
             <li>
               <Link
-                href="/"
-                className={pathname === "/" ? styles.selected : undefined}
+                href={buildHref("/")}
+                className={
+                  normalizedPathname === "/" ? styles.selected : undefined
+                }
               >
                 {t("navHome")}
               </Link>
             </li>
             <li>
               <Link
-                href="/work"
+                href={buildHref("/work")}
                 className={
                   styles.navLink +
                   " " +
-                  (pathname.startsWith("/work") ? styles.selected : "")
+                  (normalizedPathname.startsWith("/work")
+                    ? styles.selected
+                    : "")
                 }
                 tabIndex={0}
-                aria-current={pathname.startsWith("/work") ? "page" : undefined}
+                aria-current={
+                  normalizedPathname.startsWith("/work") ? "page" : undefined
+                }
               >
                 {t("navWork")}
               </Link>
             </li>
             <li>
               <Link
-                href="/about"
+                href={buildHref("/about")}
                 className={
-                  pathname.startsWith("/about") ? styles.selected : undefined
+                  normalizedPathname.startsWith("/about")
+                    ? styles.selected
+                    : undefined
                 }
               >
                 {t("navAbout")}
@@ -100,9 +145,11 @@ const Header = () => {
             </li>
             <li>
               <Link
-                href="/blog"
+                href={buildHref("/blog")}
                 className={
-                  pathname.startsWith("/blog") ? styles.selected : undefined
+                  normalizedPathname.startsWith("/blog")
+                    ? styles.selected
+                    : undefined
                 }
               >
                 {t("navBlog")}
@@ -110,9 +157,11 @@ const Header = () => {
             </li>
             <li>
               <Link
-                href="/contact"
+                href={buildHref("/contact")}
                 className={
-                  pathname.startsWith("/contact") ? styles.selected : undefined
+                  normalizedPathname.startsWith("/contact")
+                    ? styles.selected
+                    : undefined
                 }
               >
                 {t("navContact")}
@@ -155,7 +204,16 @@ const Header = () => {
             className={styles.themeToggle}
             aria-label={t("toggleDarkMode")}
           >
-            {theme === "dark" ? <WiMoonAltNew /> : <IoSunnySharp />}
+            {mounted ? (
+              theme === "dark" ? (
+                <WiMoonAltNew />
+              ) : (
+                <IoSunnySharp />
+              )
+            ) : (
+              // Render a neutral icon during SSR to prevent hydration mismatch
+              <div style={{ width: "1em", height: "1em" }} />
+            )}
           </button>
         </div>
       </div>
@@ -164,28 +222,3 @@ const Header = () => {
 };
 
 export default Header;
-function useTheme(): { theme: string; toggleTheme: () => void } {
-  const [theme, setTheme] = React.useState<string>(() => {
-    if (typeof window !== "undefined") {
-      const cookieTheme = getCookie("dt_theme");
-      if (cookieTheme === "light" || cookieTheme === "dark") {
-        return cookieTheme;
-      }
-    }
-    return "light";
-  });
-
-  React.useEffect(() => {
-    // Toggle .themeDark class on <body> for dark mode, remove for light
-    if (typeof document !== "undefined") {
-      document.body.classList.toggle("themeDark", theme === "dark");
-    }
-    setCookie("dt_theme", theme);
-  }, [theme]);
-
-  const toggleTheme = React.useCallback(() => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  }, []);
-
-  return { theme, toggleTheme };
-}

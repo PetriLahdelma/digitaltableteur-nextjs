@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { definePreview, type Preview } from "@storybook/nextjs-vite";
+import type { Preview } from "@storybook/react-vite";
 import { ThemeProvider } from "../app/components/ThemeProvider/ThemeProvider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../app/i18n";
@@ -58,7 +58,7 @@ export const globalTypes = {
 const withProviders: Preview["decorators"] = [
   (Story, context) => {
     const { theme, locale } = context.globals as {
-      theme: string;
+      theme: "light" | "dark";
       locale: string;
     };
 
@@ -98,8 +98,12 @@ export const parameters: Preview["parameters"] = {
   },
 };
 
-export default definePreview({
+export const decorators = withProviders;
+
+const preview: Preview = {
   globalTypes,
-  decorators: withProviders,
+  decorators,
   parameters,
-});
+};
+
+export default preview;

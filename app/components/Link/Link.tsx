@@ -1,34 +1,54 @@
-import React from "react";
-import styles from "./Link.module.css";
-import { FaExternalLinkAlt } from "react-icons/fa";
+"use client";
+import React, { useMemo } from "react";
+import NextLink from "next/link";
+import { useParams } from "next/navigation";
+import { Link as BaseLink } from "../ui/Link/Link";
+import type { LinkProps as BaseLinkProps } from "../ui/Link/Link";
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  size?: "S" | "M" | "L";
-}
+type LegacySize = "S" | "M" | "L";
 
-const Link: React.FC<LinkProps> = ({
-  href = "#",
-  size = "M",
-  children,
-  ...rest
-}) => {
-  const isExternal =
-    !href.startsWith("/") && !href.includes("digitaltableteur.com");
-
-  return (
-    <a
-      href={href}
-      className={`${styles.link} ${styles[`link${size}`]}`}
-      {...rest}
-    >
-      {children}
-      {isExternal && (
-        <span className={styles.externalIcon}>
-          {FaExternalLinkAlt({ "aria-label": "External link" })}
-        </span>
-      )}
-    </a>
-  );
+type LinkProps = Omit<BaseLinkProps, "size"> & {
+  size?: LegacySize;
 };
 
+const sizeMap: Record<LegacySize, BaseLinkProps["size"]> = {
+  S: "sm",
+  M: "md",
+  L: "lg",
+};
+
+const Link: React.FC<LinkProps> = ({ size, href, ...rest }) => {
+  const params = useParams();
+  const locale = useMemo(() => {
+    const value = params?.locale;
+    return typeof value === "string" ? value : undefined;
+  }, [params]);
+
+  const mappedSize = size ? sizeMap[size] : undefined;
+  const isInternal = typeof href === "string" && href.startsWith("/");
+
+  const resolvedHref = React.useMemo(() => {
+    if (!isInternal || typeof href !== "string") return href;
+    if (!locale || locale === "en") return href;
+    if (href === "") return `/${locale}`;
+    if (href === "/") return `/${locale}`;
+    if (href.startsWith(`/${locale}`)) return href;
+    return `/${locale}${href}`;
+  }, [href, isInternal, locale]);
+
+  if (isInternal) {
+    return (
+      <BaseLink
+        as={NextLink}
+        size={mappedSize}
+        href={resolvedHref}
+        {...rest}
+      />
+    );
+  }
+
+  return <BaseLink size={mappedSize} href={resolvedHref} {...rest} />;
+};
+
+export type { LinkProps };
 export default Link;

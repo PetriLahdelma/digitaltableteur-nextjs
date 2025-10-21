@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Digitaltableteur Portfolio
 
-## Getting Started
+A multilingual Next.js 15 site and Storybook workspace for Digitaltableteur — a design-led studio showcasing flagship case studies, multilingual thought-leadership, and a production-ready lead capture flow.
 
-First, run the development server:
+## Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: CSS Modules + design tokens
+- **Internationalisation**: `react-i18next` with lazy locale resources
+- **Component library**: Storybook 9 with theme + locale controls
+- **Forms & storage**: EmailJS notifications + MongoDB (serverless API route)
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000` for the site and `npm run storybook` for the component library (`http://localhost:6006`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill the following:
 
-## Learn More
+```
+NEXT_PUBLIC_EMAIL_SERVICE_ID=   # EmailJS service id (client side)
+NEXT_PUBLIC_EMAIL_TEMPLATE_ID=  # EmailJS template id
+NEXT_PUBLIC_EMAIL_PUBLIC_KEY=   # EmailJS public key
+NEXT_PUBLIC_GA_ID=              # Optional Google Analytics 4 id
+MONGODB_URI=                    # MongoDB connection string
+MONGODB_DB=                     # Database name (e.g. digitaltableteur)
+```
 
-To learn more about Next.js, take a look at the following resources:
+The contact route degrades gracefully if MongoDB or EmailJS credentials are absent.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## NPM scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Run the Next.js dev server on port `3000`. |
+| `npm run build` | Create a production build. |
+| `npm start` | Serve the production build. |
+| `npm run lint` | Run ESLint with the Next.js configuration. |
+| `npm run storybook` | Launch Storybook (port `6006`). |
+| `npm run build-storybook` | Create the static Storybook output. |
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+  [locale]/        # Locale-aware routes (home, work, blog, contact, privacy)
+  components/      # Reusable UI primitives and feature components
+  api/             # Route handlers (Mongo-backed contact endpoint)
+content/           # Typed data for case studies and blog posts
+stories/           # Intro and global Storybook stories
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Testing & quality
+
+- `npm run lint` — validates TypeScript, accessibility lint rules, and design system constraints.
+- Storybook stories exist for all primitives, plus new stories for `SocialShare` and `HelsinkiClock`.
+
+## Design system notes
+
+- Theme switching and locale persistence are handled globally in `ThemeProvider` and the `[locale]` layout.
+- Cookie consent gating controls GA injection via `AnalyticsScript`.
+- `content/` centralises multilingual case-study and blog metadata for the App Router and Storybook.
+
+## Contact flow
+
+1. Client-side validation in `ContactForm`.
+2. EmailJS notification (`NEXT_PUBLIC_EMAIL_*`).
+3. Lead persistence via `POST /api/save-contact` using MongoDB (`MONGODB_URI`).
+4. Inline success/error messaging with localisation.
+
+Feel free to open issues or PRs as the component library and case content evolve.
