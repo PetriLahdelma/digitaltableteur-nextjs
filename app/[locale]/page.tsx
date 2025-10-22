@@ -73,7 +73,12 @@ export default function HomePage() {
         </section>
 
         <section className={styles.cta}>
-          <Title level={2} size="M" terminals="sans" className={titleStyles.h2White}>
+          <Title
+            level={2}
+            size="M"
+            terminals="sans"
+            className={titleStyles.h2White}
+          >
             {t("homeCtaTitle")}
           </Title>
           <Link className={styles.ctaLink} href="/contact">

@@ -20,14 +20,20 @@
     Arial,
     sans-serif
   );
-  --font-serif: var(--secondary-body-font, "TiemposText-Regular", "Georgia", serif);
+  --font-serif: var(
+    --secondary-body-font,
+    "TiemposText-Regular",
+    "Georgia",
+    serif
+  );
   --font-display: var(
     --primary-heading-font,
     "TiemposHeadline-Regular",
     "Georgia",
     serif
   );
-  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono",
+    Menlo, monospace;
 
   --color-background: var(--main-body-background-color, #fff);
   --color-background-secondary: var(--color-light-bg, #f9f9f9);

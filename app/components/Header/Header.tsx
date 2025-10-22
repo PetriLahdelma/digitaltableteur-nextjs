@@ -97,7 +97,7 @@ const Header = () => {
             alt={t("headerLogoAlt")}
             className={styles.logo}
             width={160}
-            height={32}
+            height={40}
             priority
           />
         </Link>

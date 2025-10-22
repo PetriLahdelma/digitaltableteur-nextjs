@@ -39,8 +39,8 @@
 }
 
 .logo {
-  width: 9rem;
-  height: 9rem;
+  width: 15rem;
+  height: 15rem;
   max-width: 100%;
   object-fit: contain;
   display: block;
@@ -151,8 +151,8 @@
   }
 
   .logo {
-    width: 48px;
-    height: 48px;
+    height: 2rem;
+    max-width: 120px;
   }
 
   .nav a {
