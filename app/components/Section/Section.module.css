@@ -1,0 +1,60 @@
+.section {
+  width: 100%;
+}
+
+/* Padding variants */
+.none {
+  padding: 0;
+}
+
+.sm {
+  padding: var(--space-layout-24) 0;
+}
+
+.md {
+  padding: var(--space-layout-32) 0;
+}
+
+.lg {
+  padding: var(--space-layout-48) 0;
+}
+
+.xl {
+  padding: var(--space-layout-64) 0;
+}
+
+/* Background variants */
+.primary {
+  background: var(--color-background);
+}
+
+.secondary {
+  background: var(--color-background-secondary);
+}
+
+.accent {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
+.transparent {
+  background: transparent;
+}
+
+@media (min-width: 768px) {
+  .sm {
+    padding: var(--space-layout-32) 0;
+  }
+
+  .md {
+    padding: var(--space-layout-48) 0;
+  }
+
+  .lg {
+    padding: var(--space-layout-64) 0;
+  }
+
+  .xl {
+    padding: var(--space-layout-80) 0;
+  }
+}

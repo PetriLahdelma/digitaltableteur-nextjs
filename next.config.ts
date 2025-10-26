@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Removed experimental.typedRoutes for Turbopack compatibility
 };
 
 export default nextConfig;

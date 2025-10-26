@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { definePreview, type Preview } from "@storybook/nextjs-vite";
+import type { Preview } from "@storybook/nextjs-vite";
 import { ThemeProvider } from "../app/components/ThemeProvider/ThemeProvider";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../app/i18n";
 import en from "../app/locales/en/translation.json";
 import fi from "../app/locales/fi/translation.json";
 import sv from "../app/locales/sv/translation.json";
+import "../app/globals.css";
 
 const THEME_KEY = "storybook-theme";
 
@@ -58,15 +59,22 @@ export const globalTypes = {
 const withProviders: Preview["decorators"] = [
   (Story, context) => {
     const { theme, locale } = context.globals as {
-      theme: string;
+      theme: "light" | "dark";
       locale: string;
     };
 
-    // Remove direct DOM manipulation for theme class and background
-    // Instead, let ThemeProvider handle theme class
-    // Persist theme in localStorage only
+    // Apply theme to the Storybook canvas body and sync background
     useEffect(() => {
-      localStorage.setItem(THEME_KEY, theme);
+      if (typeof document !== "undefined") {
+        document.body.dataset.theme = theme;
+        document.body.classList.toggle("theme-dark", theme === "dark");
+        document.body.classList.toggle("themeDark", theme === "dark");
+        localStorage.setItem(THEME_KEY, theme);
+        
+        // Set the background color based on theme
+        const backgroundColor = theme === "dark" ? "#000000" : "#ffffff";
+        document.body.style.backgroundColor = backgroundColor;
+      }
     }, [theme]);
 
     useEffect(() => {
@@ -98,8 +106,12 @@ export const parameters: Preview["parameters"] = {
   },
 };
 
-export default definePreview({
+export const decorators = withProviders;
+
+const preview: Preview = {
   globalTypes,
-  decorators: withProviders,
+  decorators,
   parameters,
-});
+};
+
+export default preview;

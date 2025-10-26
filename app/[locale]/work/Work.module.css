@@ -1,0 +1,21 @@
+.workPage {
+  padding: var(--space-layout-32, 2rem);
+}
+
+.worksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-layout-32, 2rem);
+  grid-auto-rows: auto;
+}
+
+.workItem {
+  display: block;
+}
+
+.workImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 538px;
+}

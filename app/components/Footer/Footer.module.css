@@ -58,6 +58,15 @@
   font-weight: 600;
 }
 
+/* Dark theme footer text */
+:global(.themeDark) .footer,
+:global(.themeDark) .footer p,
+:global(.themeDark) .footer p a,
+:global(.themeDark) .footer h2 a,
+:global(.themeDark) .socialLinks a {
+  color: #ffffff !important;
+}
+
 @media (width <= 768px) {
   .footer {
     padding-left: var(--space-layout-32);

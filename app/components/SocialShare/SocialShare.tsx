@@ -1,0 +1,96 @@
+// components/SocialShare.tsx
+import React, { useState } from "react";
+import styles from "./SocialShare.module.css";
+import {
+  FaTwitter,
+  FaInstagram,
+  FaFacebook,
+  FaReddit,
+  FaWhatsapp,
+  FaLink,
+} from "react-icons/fa";
+import Button from "../Button";
+import Toast from "../Toast";
+import { useTranslation } from "react-i18next";
+
+interface SocialShareProps {
+  url: string;
+  title: string;
+}
+
+const SocialShare = ({ url, title }: SocialShareProps) => {
+  const { t } = useTranslation();
+  const encodedUrl = encodeURIComponent(url);
+  const encodedTitle = encodeURIComponent(title);
+  const [toastOpen, setToastOpen] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(url);
+    setToastOpen(true);
+  };
+
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
+
+  return (
+    <div className={styles.socialShare}>
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnInstagram")}
+      >
+        <FaInstagram role="img" aria-label="Instagram icon" />
+      </a>
+      <a
+        href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnTwitter")}
+      >
+        <FaTwitter role="img" aria-label="Twitter icon" />
+      </a>
+      <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnFacebook")}
+      >
+        <FaFacebook role="img" aria-label="Facebook icon" />
+      </a>
+      <a
+        href={`https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnReddit")}
+      >
+        <FaReddit role="img" aria-label="Reddit icon" />
+      </a>
+      <a
+        href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnWhatsapp")}
+      >
+        <FaWhatsapp role="img" aria-label="WhatsApp icon" />
+      </a>
+      <Button
+        variant="secondary"
+        icon={<FaLink role="img" aria-label="Copy link icon" />}
+        className={styles.copyButton}
+        onClick={handleCopy}
+        aria-label={t("copyLinkToClipboard")}
+      >
+        {t("copyLinkToClipboard")}
+      </Button>
+      <Toast
+        message={t("linkCopied")}
+        open={toastOpen}
+        onClose={handleToastClose}
+      />
+    </div>
+  );
+};
+
+export default SocialShare;

@@ -1,0 +1,47 @@
+.banner {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: var(--surface-elevated, rgba(20, 20, 20, 0.95));
+  color: var(--on-surface-high, #fff);
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.18);
+  width: min(90vw, 560px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  backdrop-filter: blur(12px);
+}
+
+.text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: inherit;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .banner {
+    bottom: 1rem;
+    padding: 1.25rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

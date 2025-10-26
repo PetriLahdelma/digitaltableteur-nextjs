@@ -1,0 +1,12 @@
+.skipLink {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}

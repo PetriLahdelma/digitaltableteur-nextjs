@@ -1,0 +1,52 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--link-color, #00f);
+  font-family: var(--primary-body-font, var(--font-text, "Moderat", sans-serif));
+  font-size: var(--font-size-text, 1.125rem);
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--color-primary, #00f);
+  text-decoration: underline;
+}
+
+.sizeSm {
+  font-size: 0.95rem;
+}
+
+.sizeLg {
+  font-size: 1.5rem;
+}
+
+.toneDefault {
+  color: var(--color-text, currentColor);
+}
+
+.tonePrimary {
+  color: var(--color-primary, #00f);
+}
+
+.toneInverse {
+  color: var(--inverted-text-color, #fff);
+}
+
+.iconOnly {
+  padding: 0.35rem;
+  border-radius: var(--radius-pill, 999px);
+  background: rgba(0, 0, 255, 0.08);
+}
+
+.iconOnly:hover,
+.iconOnly:focus-visible {
+  background: rgba(0, 0, 255, 0.16);
+}
+
+.externalIcon {
+  font-size: 0.85em;
+}

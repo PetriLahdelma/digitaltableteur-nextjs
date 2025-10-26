@@ -1,39 +1,65 @@
+"use client";
 import React from "react";
+import { cn } from "@/lib/classNames";
 import styles from "./Text.module.css";
 
 type TextSize = "S" | "M" | "L";
+type TextTerminals = "serif" | "sans";
+type TextWeight = "regular" | "medium" | "semibold" | "bold";
 
-type TextProps = {
-  children: React.ReactNode;
-  as?: keyof React.JSX.IntrinsicElements;
-  className?: string;
-  terminals?: "serif" | "sans";
+type TextProps<TTag extends React.ElementType = "p"> = {
+  as?: TTag;
   size?: TextSize;
-};
+  terminals?: TextTerminals;
+  weight?: TextWeight;
+  className?: string;
+  children: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<TTag>, "as" | "children">;
 
 const sizeClassMap: Record<TextSize, string> = {
-  S: styles["textS"] || "",
-  M: styles["textM"] || "",
-  L: styles["textL"] || "",
+  S: styles.textS,
+  M: styles.textM,
+  L: styles.textL,
 };
 
-const Text: React.FC<TextProps> = ({
-  children,
-  as = "p",
-  className = "",
-  terminals = "sans",
+const terminalsClassMap: Record<TextTerminals, string> = {
+  serif: styles.serif,
+  sans: styles.sans,
+};
+
+const weightClassMap: Record<TextWeight, string | undefined> = {
+  regular: undefined,
+  medium: styles.weightMedium,
+  semibold: styles.weightSemibold,
+  bold: styles.weightBold,
+};
+
+const Text = <TTag extends React.ElementType = "p">({
+  as,
   size = "M",
-}) => {
-  const Tag = as;
-  const terminalClass = terminals === "serif" ? styles.serif : styles.sans;
-  const sizeClass = sizeClassMap[size] || "";
+  terminals = "sans",
+  weight = "regular",
+  className,
+  children,
+  ...rest
+}: TextProps<TTag>) => {
+  const Component = (as ?? "p") as React.ElementType;
+
   return (
-    <Tag
-      className={`${styles.text} ${terminalClass} ${sizeClass} ${className}`.trim()}
+    <Component
+      className={cn(
+        styles.text,
+        sizeClassMap[size],
+        terminalsClassMap[terminals],
+        weightClassMap[weight],
+        className
+      )}
+      {...rest}
     >
       {children}
-    </Tag>
+    </Component>
   );
 };
 
+export type { TextProps };
 export default Text;

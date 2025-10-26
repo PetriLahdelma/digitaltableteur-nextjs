@@ -1,31 +1,49 @@
 .title {
-  font-family: var(--font-title);
-  font-size: var(--font-size-title);
-  color: var(--color-title);
-  margin: 0 0 1rem;
+  font-family: var(--font-title, "TiemposHeadline-Regular", serif);
+  font-size: var(--font-size-title, 2.5rem);
   font-weight: 500;
+  color: var(--color-title, var(--main-body-copy-color, #00f));
+  margin: 0 0 1rem;
+  line-height: 1.1;
 }
 
 .titleS {
-  font-size: var(--font-size-title-s);
+  font-size: var(--font-size-title-s, 1.5rem);
 }
 
 .titleM {
-  font-size: var(--font-size-title-m);
+  font-size: var(--font-size-title-m, 2rem);
 }
 
 .titleL {
-  font-size: var(--font-size-title-l);
+  font-size: var(--font-size-title-l, 3rem);
 }
 
 .titleXL {
-  font-size: var(--font-size-title-xl);
+  font-size: var(--font-size-title-xl, 5rem);
 }
 
 .fontSerif {
-  font-family: var(--font-title, "TiemposHeadline-Regular"), serif;
+  font-family: var(--font-title, "TiemposHeadline-Regular", serif);
 }
 
 .fontSans {
-  font-family: Moderat, var(--font-text, Moderat), sans-serif;
+  font-family: var(--font-text, "Moderat", sans-serif);
+}
+
+.weightRegular {
+  font-weight: 400;
+}
+
+.weightSemibold {
+  font-weight: 600;
+}
+
+.weightBold {
+  font-weight: 700;
+  font-family: var(--primary-bold-font, "Moderat-Bold", sans-serif);
+}
+
+.h2White {
+  color: #ffffff;
 }

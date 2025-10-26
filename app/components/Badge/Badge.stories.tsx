@@ -1,0 +1,130 @@
+import React from "react";
+import Badge, { iconOptions } from "./Badge";
+import { useTranslation } from "react-i18next";
+
+const meta = {
+  title: "Components/Badge",
+  component: Badge,
+  argTypes: {
+    design: {
+      control: { type: "select" },
+      options: ["primary", "secondary"],
+      description: "Badge design variant",
+    },
+    state: {
+      control: { type: "select" },
+      options: ["success", "info", "error", "warning", "neutral"],
+      description: "Semantic state color",
+    },
+    children: { control: "text", description: "Badge content" },
+    className: { control: "text", description: "Custom class name" },
+    removable: {
+      control: "boolean",
+      description: "Show a close button to remove the badge",
+    },
+    square: {
+      control: "boolean",
+      description: "Toggle square (no border-radius) style",
+    },
+    onRemove: {
+      action: "removed",
+      description: "Callback when badge is removed",
+    },
+    icon: {
+      control: { type: "select" },
+      options: Object.keys(iconOptions),
+      mapping: iconOptions,
+      description: "React icon to display in the badge",
+    },
+    size: {
+      control: { type: "select" },
+      options: ["s", "m", "l"],
+      description: "Badge size: small (s), medium (m), or large (l)",
+    },
+  },
+  args: {
+    design: "primary",
+    state: undefined,
+    children: "Badge",
+    icon: null,
+    removable: false,
+    square: false,
+    size: "m",
+  },
+};
+
+export default meta;
+
+import { StoryFn } from "@storybook/nextjs-vite";
+type BadgeProps = React.ComponentProps<typeof Badge>;
+
+// Template as a component to avoid hook issues
+const BadgeStoryTemplate: React.FC<BadgeProps> = (args) => {
+  const { t } = useTranslation();
+  let content = args.children;
+  if (typeof args.children === "string" && args.children.startsWith("badge")) {
+    content = t(args.children);
+  }
+  return <Badge {...args}>{content}</Badge>;
+};
+
+const Template: StoryFn<BadgeProps> = (args: BadgeProps) => (
+  <BadgeStoryTemplate {...args} />
+);
+
+export const Playground = Template.bind({});
+
+export const AllVariants: StoryFn<BadgeProps> = () => {
+  const { t } = useTranslation();
+  return (
+    <div style={{ display: "flex", gap: "1rem" }}>
+      <Badge design="primary">{t("badgePrimary")}</Badge>
+      <Badge design="secondary">{t("badgeSecondary")}</Badge>
+      <Badge design="primary" state="success">
+        {t("badgeSuccess")}
+      </Badge>
+      <Badge design="primary" state="error">
+        {t("badgeError")}
+      </Badge>
+      <Badge design="primary" state="warning">
+        {t("badgeWarning")}
+      </Badge>
+      <Badge design="primary" state="info">
+        {t("badgeInfo")}
+      </Badge>
+
+      <Badge design="primary" state="neutral">
+        {t("badgeNeutral")}
+      </Badge>
+    </div>
+  );
+};
+
+export const Removable = Template.bind({});
+Removable.args = {
+  removable: true,
+  children: "badgeRemovable",
+  design: "primary",
+  state: undefined,
+};
+Removable.parameters = {
+  // Prevent the play function from removing the badge before the user sees it
+  play: undefined,
+};
+
+export const AllSizes: StoryFn<BadgeProps> = () => {
+  const { t } = useTranslation();
+  return (
+    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <Badge size="s" design="primary">
+        {t("badgeSmall")}
+      </Badge>
+      <Badge size="m" design="primary">
+        {t("badgeMedium")}
+      </Badge>
+      <Badge size="l" design="primary">
+        {t("badgeLarge")}
+      </Badge>
+    </div>
+  );
+};

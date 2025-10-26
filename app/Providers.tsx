@@ -1,17 +1,19 @@
 "use client";
+
 import React from "react";
 import { I18nextProvider } from "react-i18next";
-import i18n, { initI18n } from "./i18n";
+import { getI18nInstance } from "./i18n";
 import { ThemeProvider } from "./components/ThemeProvider/ThemeProvider";
+import { CookieConsentProvider } from "./components/CookieConsent/CookieConsentContext";
 
-if (!i18n.isInitialized) {
-  initI18n();
-}
+const i18n = getI18nInstance();
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <CookieConsentProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </CookieConsentProvider>
     </I18nextProvider>
   );
 }
