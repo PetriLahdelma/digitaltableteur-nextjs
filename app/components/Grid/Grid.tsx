@@ -18,7 +18,7 @@ interface GridProps {
   justify?: CSSProperties["justifyItems"];
   style?: CSSProperties;
   className?: string;
-  [key: string]: unknown; // Allow passing any grid CSS prop
+  [key: string]: unknown; // Allow passing any additional props
 }
 
 /**
@@ -62,7 +62,7 @@ function Grid({
       const gridStyles: CSSProperties = { ...childStyle };
       if (span) gridStyles.gridColumn = `span ${span}`;
       if (rowSpan) gridStyles.gridRow = `span ${rowSpan}`;
-      return cloneElement(child as React.ReactElement<Record<string, unknown>>, {
+      return cloneElement(child as React.ReactElement<GridItemProps>, {
         ...childRest,
         style: gridStyles,
       });

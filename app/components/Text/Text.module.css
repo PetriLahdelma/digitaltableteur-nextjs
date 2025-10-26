@@ -2,7 +2,7 @@
   font-family: var(--font-text, "Moderat", sans-serif);
   font-size: var(--font-size-text, 1.125rem);
   font-weight: var(--font-weight-text, 400);
-  color: var(--color-text, currentColor);
+  color: var(--color-primary);
   line-height: 1.6;
   margin: 0 0 1rem;
 }

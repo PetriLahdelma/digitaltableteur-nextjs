@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 import Title from "../../../components/Title/Title";
 import Text from "../../../components/Text/Text";
-import Link from "../../../components/Link/Link";
+import BlogNav from "../../../components/BlogNav/BlogNav";
+import SocialShareSection from "../../../components/SocialShare/SocialShareSection";
 import styles from "./BlogPost.module.css";
 import type { BlogPost, BlogPostLocaleContent } from "@/content/posts";
 import type { SupportedLocale } from "../../../i18n";
@@ -14,16 +15,12 @@ type BlogPostViewProps = {
   post: BlogPost;
   content: BlogPostLocaleContent;
   locale: SupportedLocale;
-  previous: BlogPost | null;
-  next: BlogPost | null;
 };
 
 const BlogPostView: React.FC<BlogPostViewProps> = ({
   post,
   content,
   locale,
-  previous,
-  next,
 }) => {
   const { t } = useTranslation();
 
@@ -35,6 +32,8 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
 
   return (
     <article className={styles.post}>
+      <BlogNav currentSlug={post.slug} />
+
       <div className={styles.meta}>
         <span>{published}</span>
         <span>
@@ -76,23 +75,10 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
         </section>
       ))}
 
-      <div className={styles.nav}>
-        <Link href="/blog" className={styles.navLink}>
-          {t("blogNavBackToArticles")}
-        </Link>
-        <div className={styles.navLinks}>
-          {previous && (
-            <Link href={`/blog/${previous.slug}`} className={styles.navLink}>
-              ← {previous.locale[locale]?.title ?? previous.locale.en.title}
-            </Link>
-          )}
-          {next && (
-            <Link href={`/blog/${next.slug}`} className={styles.navLink}>
-              {next.locale[locale]?.title ?? next.locale.en.title} →
-            </Link>
-          )}
-        </div>
-      </div>
+      <SocialShareSection
+        url={`${window.location.origin}/blog/${post.slug}`}
+        title={content.title}
+      />
     </article>
   );
 };

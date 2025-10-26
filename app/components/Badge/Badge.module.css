@@ -1,0 +1,125 @@
+.badge {
+  font-family: var(--primary-body-font);
+  padding: var(--space-internal-8) var(--space-internal-16);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--color-muted-light);
+  color: var(--color-dark);
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.s {
+  padding: var(--space-internal-4) var(--space-internal-12);
+  font-size: 0.75rem;
+}
+
+.l {
+  font-size: 1.25rem;
+  padding: var(--space-internal-12) var(--space-internal-16);
+}
+
+.square {
+  border-radius: 0;
+}
+
+.primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+}
+
+.secondary {
+  background: none;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-sizing: border-box;
+}
+
+.success {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.info {
+  background: var(--color-info);
+  color: var(--color-white);
+}
+
+.error {
+  background: var(--color-error);
+  color: var(--color-white);
+}
+
+.warning {
+  background: var(--color-warning, #ffb300);
+  color: var(--color-white);
+}
+
+.neutral {
+  background: var(--color-muted-light);
+  color: var(--color-dark);
+}
+
+.closeButton {
+  background: transparent !important;
+  border: none !important;
+  margin-inline-start: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  align-items: center;
+  gap: 0.25em;
+  justify-content: center;
+  padding: 0.25rem !important;
+  min-height: auto !important;
+  min-width: auto !important;
+}
+
+.closeButton svg {
+  color: var(--color-white);
+}
+
+.closeButton:hover {
+  background: transparent !important;
+}
+
+.closeButton:active {
+  background: transparent !important;
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 0.4em;
+  vertical-align: middle;
+}
+
+.content {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.removable.s {
+  padding: var(--space-internal-2) var(--space-internal-12);
+  padding-inline-end: var(--space-internal-2);
+  font-size: 0.75rem;
+}
+
+.removable.m {
+  padding: var(--space-internal-6) var(--space-internal-16);
+  padding-inline-end: var(--space-internal-4);
+  font-size: 1rem;
+}
+
+.removable.l {
+  font-size: 1.25rem;
+  padding: var(--space-internal-12) var(--space-internal-16);
+}

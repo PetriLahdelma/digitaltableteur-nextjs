@@ -1,36 +1,39 @@
-.share {
+.socialShare {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-.button {
-  display: inline-flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-strong);
-  font-size: var(--text-sm);
-  text-decoration: none;
-  transition: background var(--transition-base);
+  block-size: 2.5rem;
 }
 
-.button:hover {
-  background: rgba(4, 61, 255, 0.18);
+.socialShare a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color);
+  text-decoration: none;
 }
 
 .copyButton {
-  background: rgba(7, 18, 51, 0.08);
-  color: var(--color-text-secondary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-internal-4);
+  cursor: pointer;
+  color: var(--primary-text-color);
+  text-decoration: none;
 }
 
-.copyButton:hover {
-  background: rgba(7, 18, 51, 0.14);
+.copyButton span {
+  margin-right: 0;
 }
 
-.status {
-  font-size: var(--text-xs);
-  color: var(--color-text-tertiary);
+.copyButton svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--primary-text-color);
+  margin: 0 auto;
+  padding: 0;
 }

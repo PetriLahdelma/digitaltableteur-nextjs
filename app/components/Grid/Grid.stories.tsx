@@ -1,96 +1,212 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
+import type { ComponentProps } from "react";
+import type { StoryFn } from "@storybook/nextjs-vite";
 import Grid from "./Grid";
 
-const meta: Meta<typeof Grid> = {
+const meta = {
   title: "Components/Grid",
   component: Grid,
-  parameters: {
-    layout: "padded",
-  },
-  tags: ["autodocs"],
   argTypes: {
     columns: {
-      control: { type: "number", min: 1, max: 12, step: 1 },
+      control: { type: "number", min: 1, max: 12 },
+      defaultValue: 3,
+      description: "Number of columns in the grid",
     },
     gap: {
-      control: { type: "text" },
+      control: "text",
+      defaultValue: "1.5rem",
+      description: "Gap between grid items (CSS value)",
+    },
+    rowGap: {
+      control: "text",
+      defaultValue: "2rem",
+      description: "Row gap (CSS value)",
+    },
+    colGap: {
+      control: "text",
+      defaultValue: "0.5rem",
+      description: "Column gap (CSS value)",
+    },
+    align: {
+      control: "select",
+      options: ["start", "center", "end", "stretch"],
+      description: "Align items vertically",
+    },
+    justify: {
+      control: "select",
+      options: ["start", "center", "end", "stretch"],
+      description: "Justify items horizontally",
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-const GridItem = ({
-  children,
-  ...props
-}: {
-  children: React.ReactNode;
-  span?: number;
-  rowSpan?: number;
-  style?: React.CSSProperties;
-  className?: string;
-}) => (
-  <div
-    style={{
-      background: "#f0f0f0",
-      padding: "1rem",
-      textAlign: "center",
-      border: "1px solid #ddd",
-      borderRadius: "4px",
-    }}
-    {...props}
-  >
-    {children}
+const Template: StoryFn<ComponentProps<typeof Grid>> = (
+  args: ComponentProps<typeof Grid>
+) => (
+  <div style={{ maxWidth: "90%", overflow: "hidden" }}>
+    <Grid
+      {...args}
+      style={{
+        background: "var(--storybook-bg)",
+        padding: 24,
+        overflow: "hidden",
+      }}
+    >
+      <Grid.Item
+        style={{
+          background: "var(--storybook-blue)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        1
+      </Grid.Item>
+      <Grid.Item
+        style={{
+          background: "var(--storybook-cyan)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        2
+      </Grid.Item>
+      <Grid.Item
+        style={{
+          background: "var(--storybook-pink)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        3
+      </Grid.Item>
+    </Grid>
   </div>
 );
 
-export const ThreeColumns: Story = {
-  args: {
-    columns: 3,
-    children: [
-      <GridItem key="1">Item 1</GridItem>,
-      <GridItem key="2">Item 2</GridItem>,
-      <GridItem key="3">Item 3</GridItem>,
-    ],
-  },
+export const Basic = Template.bind({});
+Basic.args = {
+  columns: 3,
+  gap: "1.5rem",
 };
 
-export const TwoColumns: Story = {
-  args: {
-    columns: 2,
-    gap: "2rem",
-    children: [
-      <GridItem key="1">First column</GridItem>,
-      <GridItem key="2">Second column</GridItem>,
-      <GridItem key="3">Third item (wraps)</GridItem>,
-      <GridItem key="4">Fourth item</GridItem>,
-    ],
-  },
+export const Spans = () => (
+  <div style={{ maxWidth: "90%", overflow: "hidden" }}>
+    <Grid
+      columns={4}
+      gap="1rem"
+      style={{
+        background: "var(--storybook-bg)",
+        padding: 24,
+        overflow: "hidden",
+      }}
+    >
+      <Grid.Item
+        span={2}
+        style={{
+          background: "var(--storybook-blue)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        Span 2
+      </Grid.Item>
+      <Grid.Item
+        style={{
+          background: "var(--storybook-cyan)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        Normal
+      </Grid.Item>
+      <Grid.Item
+        span={2}
+        style={{
+          background: "var(--storybook-pink)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        Span 2
+      </Grid.Item>
+      <Grid.Item
+        style={{
+          background: "var(--storybook-purple)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        Normal
+      </Grid.Item>
+    </Grid>
+  </div>
+);
+
+export const Nested = () => (
+  <div style={{ maxWidth: "90%", overflow: "hidden" }}>
+    <Grid
+      columns={2}
+      gap="2rem"
+      style={{
+        background: "var(--storybook-bg)",
+        padding: 24,
+        overflow: "hidden",
+      }}
+    >
+      <Grid.Item
+        style={{
+          background: "var(--storybook-blue)",
+          color: "var(--storybook-white)",
+          padding: 16,
+        }}
+      >
+        Parent 1
+      </Grid.Item>
+      <Grid columns={3} gap="0.5rem">
+        <Grid.Item
+          style={{
+            background: "var(--storybook-cyan)",
+            color: "var(--storybook-white)",
+            padding: 12,
+          }}
+        >
+          A
+        </Grid.Item>
+        <Grid.Item
+          style={{
+            background: "var(--storybook-pink)",
+            color: "var(--storybook-white)",
+            padding: 12,
+          }}
+        >
+          B
+        </Grid.Item>
+        <Grid.Item
+          style={{
+            background: "var(--storybook-purple)",
+            color: "var(--storybook-white)",
+            padding: 12,
+          }}
+        >
+          C
+        </Grid.Item>
+      </Grid>
+    </Grid>
+  </div>
+);
+
+export const RowAndColGap = Template.bind({});
+RowAndColGap.args = {
+  columns: 3,
+  rowGap: "2rem",
+  colGap: "0.5rem",
 };
 
-export const WithSpanning: Story = {
-  args: {
-    columns: 3,
-    children: [
-      <GridItem key="1" span={2}>
-        Spans 2 columns
-      </GridItem>,
-      <GridItem key="2">Regular item</GridItem>,
-      <GridItem key="3">Another item</GridItem>,
-      <GridItem key="4">Final item</GridItem>,
-    ],
-  },
-};
-
-export const SingleColumn: Story = {
-  args: {
-    columns: 1,
-    children: [
-      <GridItem key="1">First item</GridItem>,
-      <GridItem key="2">Second item</GridItem>,
-      <GridItem key="3">Third item</GridItem>,
-    ],
-  },
+export const Alignment = Template.bind({});
+Alignment.args = {
+  columns: 3,
+  align: "center",
+  justify: "center",
 };

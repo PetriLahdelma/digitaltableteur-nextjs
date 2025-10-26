@@ -1,7 +1,7 @@
 @import "./styles/variables.css";
 @import "./styles/fonts.css";
 
-:root {
+/* :root {
   color-scheme: light;
 
   --font-sans: var(
@@ -20,20 +20,14 @@
     Arial,
     sans-serif
   );
-  --font-serif: var(
-    --secondary-body-font,
-    "TiemposText-Regular",
-    "Georgia",
-    serif
-  );
+  --font-serif: var(--secondary-body-font, "TiemposText-Regular", "Georgia", serif);
   --font-display: var(
     --primary-heading-font,
     "TiemposHeadline-Regular",
     "Georgia",
     serif
   );
-  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono",
-    Menlo, monospace;
+  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
   --color-background: var(--main-body-background-color, #fff);
   --color-background-secondary: var(--color-light-bg, #f9f9f9);
@@ -118,7 +112,7 @@
   --z-header: 1000;
   --z-overlay: 1100;
   --z-modal: 1200;
-}
+} */
 
 body[data-theme="dark"],
 body.theme-dark,

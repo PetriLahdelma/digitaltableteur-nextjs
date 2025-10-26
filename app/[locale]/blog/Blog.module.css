@@ -1,8 +1,5 @@
 .blog {
   padding: 0 6rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
 }
 
 .heading {
@@ -19,7 +16,7 @@
   gap: 2rem;
 }
 
-.card {
+/* .card {
   display: block;
   padding: 2rem;
   border-radius: var(--radius-md, 0.25rem);
@@ -28,9 +25,9 @@
   color: inherit;
   transition: border-color 0.2s ease, transform 0.2s ease;
   background: var(--color-light-bg, #f9f9f9);
-}
+} */
 
-.card:hover,
+/* .card:hover,
 .card:focus-visible {
   border-color: var(--color-primary, #00f);
   transform: translateY(-4px);
@@ -62,7 +59,7 @@
 .readMore {
   font-weight: 600;
   color: var(--color-primary, #00f);
-}
+} */
 
 @media (width <= 768px) {
   .blog {

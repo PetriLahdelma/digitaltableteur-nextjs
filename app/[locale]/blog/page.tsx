@@ -1,10 +1,10 @@
 "use client";
 import React, { useMemo } from "react";
+import ArticleCard from "@/app/components/ArticleCard";
 import Head from "next/head";
 import styles from "./Blog.module.css";
 import Title from "../../components/Title/Title";
 import Text from "../../components/Text/Text";
-import Link from "../../components/Link/Link";
 import HelsinkiClock from "../../components/HelsinkiClock/HelsinkiClock";
 import { useTranslation } from "react-i18next";
 import { getPosts } from "@/content/posts";
@@ -55,18 +55,14 @@ export default function BlogIndex() {
         </div>
         <div className={styles.list}>
           {posts.map((post) => (
-            <Link key={post.href} href={post.href} className={styles.card}>
-              <Title as="h2" level={2} size="M" className={styles.title}>
-                {post.title}
-              </Title>
-              <Text size="M" className={styles.lead}>
-                {post.summary}
-              </Text>
-              <div className={styles.meta}>
-                <span className={styles.readTime}>{post.readTime}</span>
-                <span className={styles.readMore}>{t("blogReadMore")}</span>
-              </div>
-            </Link>
+            <ArticleCard
+              key={post.href}
+              title={post.title}
+              lead={post.summary}
+              link={post.href}
+              readTime={post.readTime}
+              className={styles.card}
+            />
           ))}
         </div>
       </div>

@@ -1,97 +1,94 @@
-"use client";
-
-import React from "react";
-import {
-  FiFacebook,
-  FiLinkedin,
-  FiTwitter,
-  FiCopy,
-  FiShare2,
-} from "react-icons/fi";
-import { FaRedditAlien, FaWhatsapp } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import Link from "../Link/Link";
+// components/SocialShare.tsx
+import React, { useState } from "react";
 import styles from "./SocialShare.module.css";
+import {
+  FaTwitter,
+  FaInstagram,
+  FaFacebook,
+  FaReddit,
+  FaWhatsapp,
+  FaLink,
+} from "react-icons/fa";
+import Button from "../Button";
+import Toast from "../Toast";
+import { useTranslation } from "react-i18next";
 
-type SocialShareProps = {
+interface SocialShareProps {
   url: string;
   title: string;
-  className?: string;
-};
+}
 
-const encode = (value: string) => encodeURIComponent(value);
-
-const SocialShare: React.FC<SocialShareProps> = ({ url, title, className }) => {
+const SocialShare = ({ url, title }: SocialShareProps) => {
   const { t } = useTranslation();
-  const [copied, setCopied] = React.useState(false);
+  const encodedUrl = encodeURIComponent(url);
+  const encodedTitle = encodeURIComponent(title);
+  const [toastOpen, setToastOpen] = useState(false);
 
-  const shareUrl = React.useMemo(() => url, [url]);
-  const encodedUrl = React.useMemo(() => encode(shareUrl), [shareUrl]);
-  const encodedTitle = React.useMemo(() => encode(title), [title]);
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (error) {
-      console.warn("Clipboard copy failed", error);
-    }
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(url);
+    setToastOpen(true);
   };
 
-  const buttons = [
-    {
-      id: "twitter",
-      label: t("shareOnTwitter"),
-      href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-      icon: <FiTwitter />, 
-      rel: "noopener noreferrer",
-    },
-    {
-      id: "linkedin",
-      label: t("shareOnLinkedin", { defaultValue: "Share on LinkedIn" }),
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      icon: <FiLinkedin />, 
-    },
-    {
-      id: "facebook",
-      label: t("shareOnFacebook"),
-      href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      icon: <FiFacebook />, 
-    },
-    {
-      id: "reddit",
-      label: t("shareOnReddit"),
-      href: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
-      icon: <FaRedditAlien />, 
-    },
-    {
-      id: "whatsapp",
-      label: t("shareOnWhatsapp"),
-      href: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`,
-      icon: <FaWhatsapp />, 
-    },
-  ];
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
 
   return (
-    <div className={`${styles.share} ${className ?? ""}`.trim()}>
-      {buttons.map((button) => (
-        <Link
-          key={button.id}
-          href={button.href}
-          className={styles.button}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {button.icon}
-          {button.label}
-        </Link>
-      ))}
-      <button type="button" className={`${styles.button} ${styles.copyButton}`} onClick={copyToClipboard}>
-        {copied ? <FiShare2 /> : <FiCopy />}
-        {copied ? t("linkCopied") : t("copyLinkToClipboard")}
-      </button>
-      {copied && <span className={styles.status}>{t("linkCopied")}</span>}
+    <div className={styles.socialShare}>
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnInstagram")}
+      >
+        <FaInstagram role="img" aria-label="Instagram icon" />
+      </a>
+      <a
+        href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnTwitter")}
+      >
+        <FaTwitter role="img" aria-label="Twitter icon" />
+      </a>
+      <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnFacebook")}
+      >
+        <FaFacebook role="img" aria-label="Facebook icon" />
+      </a>
+      <a
+        href={`https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnReddit")}
+      >
+        <FaReddit role="img" aria-label="Reddit icon" />
+      </a>
+      <a
+        href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("shareOnWhatsapp")}
+      >
+        <FaWhatsapp role="img" aria-label="WhatsApp icon" />
+      </a>
+      <Button
+        variant="secondary"
+        icon={<FaLink role="img" aria-label="Copy link icon" />}
+        className={styles.copyButton}
+        onClick={handleCopy}
+        aria-label={t("copyLinkToClipboard")}
+      >
+        {t("copyLinkToClipboard")}
+      </Button>
+      <Toast
+        message={t("linkCopied")}
+        open={toastOpen}
+        onClose={handleToastClose}
+      />
     </div>
   );
 };
